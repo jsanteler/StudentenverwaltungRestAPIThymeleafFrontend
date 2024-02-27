@@ -68,6 +68,7 @@ public class StudentThymeleafController {
         }
     }
 
+    @PostMapping("/update")
     public String studentUpdaten(@Valid Student student, BindingResult bindingResult)
     {
         if(bindingResult.hasErrors())
@@ -84,5 +85,19 @@ public class StudentThymeleafController {
                 return "redirect:/web/v1/studenten";
             }
         }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String studentLoeschen(@PathVariable Long id)
+    {
+        try
+        {
+            this.studentenService.studentLoeschenMitId(id);
+            return "redirect:/web/v1/studenten";
+        } catch (StudentNichtGefunden studentNichtGefunden)
+        {
+            return "redirect:/web/v1/studenten"; 
+        }
+
     }
 }
