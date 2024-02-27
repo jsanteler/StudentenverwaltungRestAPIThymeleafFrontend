@@ -68,4 +68,21 @@ public class StudentThymeleafController {
         }
     }
 
+    public String studentUpdaten(@Valid Student student, BindingResult bindingResult)
+    {
+        if(bindingResult.hasErrors())
+        {
+            return "studentenupdaten";
+        }else
+        {
+            try {
+                this.studentenService.studentUpdaten(student);
+                return "redirect:/web/v1/studenten";
+
+            }catch (StudentNichtGefunden studentNichtGefunden)
+            {
+                return "redirect:/web/v1/studenten";
+            }
+        }
+    }
 }
